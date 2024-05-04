@@ -77,16 +77,16 @@ export class ClientComponent implements OnInit {
   {
     var updateSuccessful;
     var clientSelectedId = this.clientProperties.clientid;
-    this.httpClient.put(this.url_client_api + '/' + clientSelectedId, this.clientProperties).subscribe((responseData) => {
+    this.httpClient.put<ClientInsertResponse>(this.url_client_api + '/' + clientSelectedId, this.clientProperties).subscribe((responseData) => {
       updateSuccessful = responseData;
-      if(updateSuccessful)
+      if(responseData.statusCode == 200)
       {
         alert("Actualizacion exitosa");
         this.clients = this.getClients();
       }
       else
       {
-        alert("Actualizacion no exitosa");
+        alert("Actualizacion no exitosa. Error: " + responseData.message);
       }
     });
   }
