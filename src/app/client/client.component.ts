@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ClientProperties } from '../client-properties.interface';
+import { ClientInsertResponse } from '../client-insertresponse.interface';
 
 @Component({
   selector: 'app-client',
@@ -52,11 +53,24 @@ export class ClientComponent implements OnInit {
 
   postClient()
   {
+
     if(this.clientProperties.referenceaddress == '')
     {
       this.clientProperties.referenceaddress = null;
     }
-    this.clients = this.httpClient.post(this.url_client_api, this.clientProperties);
+    this.httpClient.post<ClientInsertResponse>(this.url_client_api, this.clientProperties).subscribe((responseData) => {
+
+      if(responseData.statusCode == 200)
+      {
+        alert("Registro exitoso");
+        this.clients = this.getClients();
+      }
+      else
+      {
+        alert("Registro no exitoso. Error: " + responseData.message)
+      }
+
+    });
   }
 
   putClient()
@@ -64,17 +78,14 @@ export class ClientComponent implements OnInit {
     var updateSuccessful;
     var clientSelectedId = this.clientProperties.clientid;
     this.httpClient.put(this.url_client_api + '/' + clientSelectedId, this.clientProperties).subscribe((responseData) => {
-      console.log(responseData);
       updateSuccessful = responseData;
       if(updateSuccessful)
       {
-        console.log("Actualizacion exitosa");
         alert("Actualizacion exitosa");
         this.clients = this.getClients();
       }
       else
       {
-        console.log("Actualizacion no exitosa");
         alert("Actualizacion no exitosa");
       }
     });
