@@ -1,0 +1,100 @@
+<!-- <p>client works!</p> -->
+<h1>Listado de clientes</h1>
+<!-- <button (click)="getClients()">Obtener los clientes</button> -->
+
+<!-- modal trigger -->
+<section>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 text-center">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#clientFormModal" (click)="setPostOrPut('post'); cleanClientProperties()" >
+          Registrar Nuevo Cliente
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- modal itself -->
+<div class="modal fade" id="clientFormModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-title">Registro de Cliente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form>
+
+          <!-- <label for="clientid" class="form-label">Id</label> -->
+          <input id="clientid" type="hidden" name="clientid" class="form-control" [(ngModel)]="clientProperties.clientid" >
+
+          <label for="nombres" class="form-label" >Nombres</label>
+          <!-- <input id="nombres" type="text" name="firstname" class="form-control" maxlength="50" required [(ngModel)]="clientProperties.firstname" > -->
+          <input id="nombres" type="text" name="firstname" class="form-control" maxlength="50" required [(ngModel)]="clientProperties.firstname" [ngModelOptions]="{ standalone: true}" >
+
+          <label for="apellidos" class="form-label" >Apellidos</label>
+          <input id="apellidos" type="text" name="lastname" class="form-control" maxlength="50" required [(ngModel)]="clientProperties.lastname" >
+
+          <label for="identificacion" class="form-label" >Identificaci&oacute;n</label>
+          <input id="identificacion" type="text" name="identification" class="form-control" maxlength="13" required [(ngModel)]="clientProperties.identification" >
+
+          <label for="email" class="form-label" >Email</label>
+          <input id="email" type="email" name="email" class="form-control" maxlength="120" required [(ngModel)]="clientProperties.email" >
+
+          <label for="telefono" class="form-label" >N&uacute;mero Telef&oacute;nico</label>
+          <input id="telefono" type="tel" name="phonenumber" class="form-control" maxlength="13" required [(ngModel)]="clientProperties.phonenumber" >
+
+          <label for="direccion" class="form-label" >Direcci&oacute;n</label>
+          <input id="direccion" type="text" name="address" class="form-control" maxlength="100" required [(ngModel)]="clientProperties.address" >
+
+          <label for="refdireccion" class="form-label" >Referencia de Direcci&oacute;n</label>
+          <input id="refdireccion" type="text" name="referenceaddress" class="form-control" maxlength="100" [(ngModel)]="clientProperties.referenceaddress" >
+
+        </form>
+
+      </div>
+
+      <div class="modal-footer" [ngSwitch]="postOrPut">
+        <!-- <button class="btn btn-success" (click)="postClient()">Grabar</button> -->
+        <button class="btn btn-success" *ngSwitchCase="'post'" (click)="postClient()">Grabar</button>
+        <button class="btn btn-success" *ngSwitchCase="'put'" (click)="putClient()">Actualizar</button>
+        <!-- <button class="btn btn-success" (click)="saveClient()">Grabar o Actualizar</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombres y Apellidos</th>
+      <th>Identificaci&oacute;n</th>
+      <th>Tel&eacute;fono</th>
+      <th>Direcci&oacute;n</th>
+      <th>Email</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let client of clients | async">
+      <td>{{ client.clientid }}</td>
+      <td>{{ client.firstname + " " + client.lastname }}</td>
+      <td>{{ client.identification }}</td>
+      <td>{{ client.phonenumber }}</td>
+      <td>{{ client.address }}</td>
+      <td>{{ client.email }}</td>
+      <td>
+        <button class="btn btn-primary" id="updateclient{{client.clientid}}" data-bs-toggle="modal" data-bs-target="#clientFormModal" (click)="getClient(client.clientid); setPostOrPut('put')">
+          Actualizar Cliente
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- <div *ngFor="let post of posts | async">
+  {{ post | json }}
+</div> -->
+
