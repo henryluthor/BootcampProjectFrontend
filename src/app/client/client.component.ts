@@ -75,10 +75,8 @@ export class ClientComponent implements OnInit {
 
   putClient()
   {
-    var updateSuccessful;
     var clientSelectedId = this.clientProperties.clientid;
     this.httpClient.put<ClientInsertResponse>(this.url_client_api + '/' + clientSelectedId, this.clientProperties).subscribe((responseData) => {
-      updateSuccessful = responseData;
       if(responseData.statusCode == 200)
       {
         alert("Actualizacion exitosa");

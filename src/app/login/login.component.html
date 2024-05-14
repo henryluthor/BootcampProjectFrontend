@@ -1,0 +1,11 @@
+<!-- <p>login works!</p> -->
+
+<form>
+  <label for="username" class="form-label">Usuario</label>
+  <input id="username" type="text" name="username" class="form-control" minlength="8" maxlength="20" required [(ngModel)]="loginInputs.username">
+
+  <label for="password" class="form-label">Contrase&ntilde;a</label>
+  <input id="password" type="password" name="password" class="form-control" minlength="8" maxlength="30" required [(ngModel)]="loginInputs.password">
+
+  <button class="btn btn-primary" (click)="LoginProcess()">Ingresar</button>
+</form>
