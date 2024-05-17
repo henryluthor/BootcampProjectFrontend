@@ -1,4 +1,5 @@
-export interface ClientProperties {
+export interface ClientProperties
+{
   clientid?: number | null,
   firstname: string,
   lastname: string,
