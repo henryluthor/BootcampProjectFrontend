@@ -18,6 +18,24 @@
     <input id="email" type="email" name="email" class="form-control" maxlength="100" required [(ngModel)]="userProperties.email">
   </div>
 
-</form>
+  <!-- <div class="mb-3">
+    <label for="rolIdAlt" class="form-label">Rol manual</label>
+    <select id="rolIdAlt" name="rolIdAlt">
+      <option value="1">Administrador</option>
+      <option value="2">Otro</option>
+    </select>
+  </div> -->
 
+  <div class="mb-3">
+    <label for="rolId" class="form-label">Rol</label>
+    <select id="rolId" name="rolId" [(ngModel)]="userProperties.rolId">
+      <option value="{{ rol.rolid }}" *ngFor="let rol of roles | async">{{ rol.rolname}}</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <button class="btn btn-primary" (click)="postUser()">Guardar Usuario</button>
+  </div>
+
+</form>
 
